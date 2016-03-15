@@ -1,5 +1,5 @@
 # goshell
-goshell for simple test
+run go as shell  
 
 ## Why 
 Try some basic idea without creating a file, compiling, running.  
