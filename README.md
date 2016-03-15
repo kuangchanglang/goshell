@@ -3,7 +3,7 @@ goshell for simple test
 
 ## Why 
 Try some basic idea without creating a file, compiling, running.  
-Just like What python do.  
+Just like what python does.  
 
 ## Installation  
 ### Requirements:  
