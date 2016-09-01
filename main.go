@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -24,6 +25,8 @@ func mainloop() {
 	// init current buffer
 	curBuffer := increBuffer
 
+	fmt.Println("Goshell v1.0 (2016-9-1 17:28:02)")
+	fmt.Println(`Type "quit" to exit`)
 	rl, err := readline.New(">>> ")
 	if err != nil {
 		panic(err)
