@@ -26,10 +26,12 @@ func _UNMASK_STDOUT(){
 // buffers that will be flush to file and execute go run
 // we do flush() and gorun() for each non-assignment and
 // non-func statement
-var importBuffer *Buffer // import codes
-var funcBuffer *Buffer   // func codes
-var mainBuffer *Buffer   // codes in main function
-var increBuffer *Buffer  // used to record increment codes that has not been run
+var (
+	importBuffer *Buffer // import codes
+	funcBuffer   *Buffer // func codes
+	mainBuffer   *Buffer // codes in main function
+	increBuffer  *Buffer // used to record increment codes that has not been run
+)
 
 // init buffer
 func initBuffer() {
