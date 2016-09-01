@@ -7,7 +7,7 @@ Just like what python does.
 
 ## Installation  
 ### Requirements:  
-1. golang  
+1. golang 1.6 (if you are using golang 1.6-, ```go get github.com/chzyer/readline``` is required)
 2. goimports(strongly recommend which help you import package you are using)
 
 ### Installation:  
