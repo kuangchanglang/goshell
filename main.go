@@ -1,11 +1,10 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
 	"log"
-	"os"
 	"strings"
+
+	"github.com/chzyer/readline"
 )
 
 //var bracketStack = 0
@@ -14,7 +13,7 @@ var braceStack = 0
 func main() {
 	err := setUp()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("setup error: %v", err)
 		return
 	}
 	defer cleanUp()
@@ -22,15 +21,25 @@ func main() {
 }
 
 func mainloop() {
-	reader := bufio.NewReader(os.Stdin)
 	// init current buffer
 	curBuffer := increBuffer
+
+	rl, err := readline.New(">>> ")
+	if err != nil {
+		panic(err)
+	}
+	defer rl.Close()
 	for {
-		fmt.Print(">>> ")
-		str, _ := reader.ReadString('\n')
+		//str, _ := reader.ReadString('\n')
+		str, err := rl.Readline()
+		if err != nil {
+			log.Fatal("read line error: %v", err)
+		}
+
 		if strings.Trim(str, " \n") == "quit" {
 			break
 		}
+		str += "\n"
 		switch statementType(str) {
 		case stImport: // import
 			importBuffer.WriteString(str)
