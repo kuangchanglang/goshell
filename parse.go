@@ -4,68 +4,68 @@ import "regexp"
 
 // statement type
 const (
-	ST_TYPE_IMPORT        = iota // import "fmt"
-	ST_TYPE_ASSIGN               // a := b
-	ST_TYPE_LEFT_BRACKET         // (
-	ST_TYPE_RIGHT_BRACKET        // )
-	ST_TYPE_LEFT_BRACE           // {
-	ST_TYPE_RIGHT_BRACE          // }
-	ST_TYPE_FUNC                 // func
-	ST_TYPE_EMPTY_STR            // empty string
-	ST_TYPE_DEFAULT
+	stImport       = iota // import "fmt"
+	stAssign              // a := b
+	stLeftBracket         // (
+	stRightBracket        // )
+	stLeftBrace           // {
+	stRightBrace          // }
+	stFunc                // func
+	stEmptyStr            // empty string
+	stDefault
 )
 
 // regexp for each statement type
 const (
-	RE_IMPORT        = "^\\s*import\\s+"
-	RE_ASSIGN        = "^[^\"']+=.+|^[^\"']+:=.+|^\\s*var\\s*.+"
-	RE_LEFT_BRACKET  = ".*(\\s*$"
-	RE_RIGHT_BRACKET = "^\\s*)\\s*$"
-	RE_LEFT_BRACE    = ".*{\\s*$"
-	RE_RIGHT_BRACE   = "^\\s*}\\s*$"
-	RE_FUNC          = "^\\s*func\\s+"
-	RE_EMPTY_STR     = "^\\s*$"
+	reImport       = "^\\s*import\\s+"
+	reAssign       = "^[^\"']+=.+|^[^\"']+:=.+|^\\s*var\\s*.+"
+	reLeftBracket  = ".*(\\s*$"
+	reRightBracket = "^\\s*)\\s*$"
+	reLeftBrace    = ".*{\\s*$"
+	reRightBrace   = "^\\s*}\\s*$"
+	reFunc         = "^\\s*func\\s+"
+	reEmptyStr     = "^\\s*$"
 )
 
 func statementType(s string) int {
-	m, err := regexp.MatchString(RE_EMPTY_STR, s)
+	m, err := regexp.MatchString(reEmptyStr, s)
 	if err == nil && m {
-		return ST_TYPE_EMPTY_STR
+		return stEmptyStr
 	}
 
-	m, err = regexp.MatchString(RE_IMPORT, s)
+	m, err = regexp.MatchString(reImport, s)
 	if err == nil && m {
-		return ST_TYPE_IMPORT
+		return stImport
 	}
 
-	m, err = regexp.MatchString(RE_LEFT_BRACKET, s)
+	m, err = regexp.MatchString(reLeftBracket, s)
 	if err == nil && m {
-		return ST_TYPE_LEFT_BRACKET
+		return stLeftBracket
 	}
 
-	m, err = regexp.MatchString(RE_RIGHT_BRACKET, s)
+	m, err = regexp.MatchString(reRightBracket, s)
 	if err == nil && m {
-		return ST_TYPE_RIGHT_BRACKET
+		return stRightBracket
 	}
 
-	m, err = regexp.MatchString(RE_LEFT_BRACE, s)
+	m, err = regexp.MatchString(reLeftBrace, s)
 	if err == nil && m {
-		m, err = regexp.MatchString(RE_FUNC, s)
+		m, err = regexp.MatchString(reFunc, s)
 		if err == nil && m {
-			return ST_TYPE_FUNC
+			return stFunc
 		}
-		return ST_TYPE_LEFT_BRACE
+		return stLeftBrace
 	}
 
-	m, err = regexp.MatchString(RE_RIGHT_BRACE, s)
+	m, err = regexp.MatchString(reRightBrace, s)
 	if err == nil && m {
-		return ST_TYPE_RIGHT_BRACE
+		return stRightBrace
 	}
 
-	m, err = regexp.MatchString(RE_ASSIGN, s)
+	m, err = regexp.MatchString(reAssign, s)
 	if err == nil && m {
-		return ST_TYPE_ASSIGN
+		return stAssign
 	}
 
-	return ST_TYPE_DEFAULT
+	return stDefault
 }

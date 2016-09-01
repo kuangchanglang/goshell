@@ -2,13 +2,14 @@ package main
 
 import "bytes"
 
-// buffer with undo and save
+// Buffer with undo and save
 type Buffer struct {
 	*bytes.Buffer
 	length int
 }
 
-func NewBufferString(str string) *Buffer {
+// NewBufferFromString new buffer from given string
+func NewBufferFromString(str string) *Buffer {
 	b := &Buffer{
 		bytes.NewBufferString(str),
 		0,
@@ -16,18 +17,19 @@ func NewBufferString(str string) *Buffer {
 	return b
 }
 
-// saved length
+// Len returns saved length
 func (b *Buffer) Len() int {
 	return b.length
 }
 
+// Undo trancate last operation
 // delete unsaved bytes which is writen since last
 // Save()
 func (b *Buffer) Undo() {
 	b.Truncate(b.length)
 }
 
-// save all bytes by setting length as buffer length
+// Save all bytes by setting length as buffer length
 func (b *Buffer) Save() {
 	b.length = b.Buffer.Len()
 }

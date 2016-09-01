@@ -24,7 +24,7 @@ func main() {
 func mainloop() {
 	reader := bufio.NewReader(os.Stdin)
 	// init current buffer
-	var curBuffer *Buffer = increBuffer
+	curBuffer := increBuffer
 	for {
 		fmt.Print(">>> ")
 		str, _ := reader.ReadString('\n')
@@ -32,7 +32,7 @@ func mainloop() {
 			break
 		}
 		switch statementType(str) {
-		case ST_TYPE_IMPORT: // import
+		case stImport: // import
 			importBuffer.WriteString(str)
 		/*
 			case ST_TYPE_LEFT_BRACKET:
@@ -46,25 +46,25 @@ func mainloop() {
 					run()
 				}
 		*/
-		case ST_TYPE_LEFT_BRACE: // '{' found at the end
+		case stLeftBrace: // '{' found at the end
 			curBuffer.WriteString(str)
-			braceStack += 1
-		case ST_TYPE_RIGHT_BRACE: // '}' found
+			braceStack++
+		case stRightBrace: // '}' found
 			curBuffer.WriteString(str)
-			braceStack -= 1
+			braceStack--
 			if braceStack <= 0 {
 				braceStack = 0
 				curBuffer = increBuffer
 				execute()
 			}
-		case ST_TYPE_ASSIGN:
+		case stAssign:
 			curBuffer.WriteString(str)
-		case ST_TYPE_FUNC:
+		case stFunc:
 			// begin func
-			braceStack += 1
+			braceStack++
 			curBuffer = funcBuffer
 			curBuffer.WriteString(str)
-		case ST_TYPE_EMPTY_STR:
+		case stEmptyStr:
 			// do nothing
 		default:
 			curBuffer.WriteString(str)

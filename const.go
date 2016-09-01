@@ -1,7 +1,7 @@
 package main
 
 const (
-	CODE_DIR   = "/tmp/goshell"
-	FILENAME   = "goshell.go"
-	PERMISSION = 0755
+	codeDir    = "/tmp/goshell"
+	codeFile   = "goshell.go"
+	permission = 0755
 )

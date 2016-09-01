@@ -23,11 +23,11 @@ func execute() {
 // try go run goshell.go, if fail, return err
 func tryExecute() error {
 	// run goimports in advance
-	goimports := exec.Command("goimports", "-w", path.Join(CODE_DIR, FILENAME))
+	goimports := exec.Command("goimports", "-w", path.Join(codeDir, codeFile))
 	goimports.Run()
 
 	// run go file
-	cmd := exec.Command("go", "run", path.Join(CODE_DIR, FILENAME))
+	cmd := exec.Command("go", "run", path.Join(codeDir, codeFile))
 
 	var outBuffer bytes.Buffer
 	var errBuffer bytes.Buffer

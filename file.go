@@ -6,16 +6,18 @@ import (
 )
 
 // in case import conflict while import "os" manually
-const IMPORT_OS = "import GOSHELL_OS \"os\"\n"
-const IMPORT_SYSCALL = "import GOSHELL_SYSCALL \"syscall\"\n"
+const (
+	importOS      = "import GOSHELL_OS \"os\"\n"
+	importSyscall = "import GOSHELL_SYSCALL \"syscall\"\n"
+)
 
 // mask stdout to nil
-const FUNC_MASK_STDOUT = `
+const funcMaskStdout = `
 func _MASK_STDOUT(){
 	GOSHELL_OS.Stdout = nil
 }
 `
-const FUNC_UNMASK_STDOUT = `
+const funcUnmarskStdout = `
 func _UNMASK_STDOUT(){
 	GOSHELL_OS.Stdout = GOSHELL_OS.NewFile(uintptr(GOSHELL_SYSCALL.Stdout), "/dev/stdout")
 }
@@ -31,16 +33,16 @@ var increBuffer *Buffer  // used to record increment codes that has not been run
 
 // init buffer
 func initBuffer() {
-	importBuffer = NewBufferString("")
-	funcBuffer = NewBufferString("")
-	mainBuffer = NewBufferString("")
-	increBuffer = NewBufferString("")
+	importBuffer = NewBufferFromString("")
+	funcBuffer = NewBufferFromString("")
+	mainBuffer = NewBufferFromString("")
+	increBuffer = NewBufferFromString("")
 
 	importBuffer.WriteString("package main\n")
-	importBuffer.WriteString(IMPORT_OS)
-	importBuffer.WriteString(IMPORT_SYSCALL)
-	funcBuffer.WriteString(FUNC_MASK_STDOUT)
-	funcBuffer.WriteString(FUNC_UNMASK_STDOUT)
+	importBuffer.WriteString(importOS)
+	importBuffer.WriteString(importSyscall)
+	funcBuffer.WriteString(funcMaskStdout)
+	funcBuffer.WriteString(funcUnmarskStdout)
 	mainBuffer.WriteString("func main(){\n")
 	mainBuffer.WriteString("_MASK_STDOUT()\n") // mask stdout at the beginning then unmask before new codes
 	save()
@@ -49,13 +51,13 @@ func initBuffer() {
 // setup env
 func setUp() error {
 	initBuffer()
-	err := os.MkdirAll(CODE_DIR, PERMISSION)
+	err := os.MkdirAll(codeDir, permission)
 	return err
 }
 
 // clean up env
 func cleanUp() {
-	os.Remove(path.Join(CODE_DIR, FILENAME))
+	os.Remove(path.Join(codeDir, codeFile))
 	// remove dir?
 }
 
@@ -64,7 +66,7 @@ func cleanUp() {
 // main section contains three part: old main,
 // unmask stdout and increment buffer
 func flush() error {
-	file, err := os.Create(path.Join(CODE_DIR, FILENAME))
+	file, err := os.Create(path.Join(codeDir, codeFile))
 	if err != nil {
 		return err
 	}
