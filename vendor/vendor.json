@@ -1,0 +1,13 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "cnfXXFiqsTbt2v71Sd8bVbhMxTs=",
+			"path": "github.com/chzyer/readline",
+			"revision": "27fdf0b28553d0c2f87f331be53b269637c70b5e",
+			"revisionTime": "2016-08-31T15:51:28Z"
+		}
+	],
+	"rootPath": "goshell"
+}
