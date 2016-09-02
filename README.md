@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/kuangchanglang/goshell.svg?branch=master)](https://travis-ci.org/kuangchanglang/goshell)
 # goshell
 run go as shell  
 
